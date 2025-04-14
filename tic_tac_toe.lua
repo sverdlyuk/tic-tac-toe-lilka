@@ -191,6 +191,11 @@ function lilka.update(delta)
                         game_over = true
                         if winner ~= "draw" then
                             score[winner] = score[winner] + 1
+                            if winner == "O" then
+                                play_loss_sound()  -- Відтворення сумного звуку, якщо виграв "O"
+                            elseif winner == "X" then
+                                play_win_sound()  -- Відтворення радісного звуку, якщо виграв "X"
+                            end
                         end
                     end
                 end
@@ -206,6 +211,11 @@ function lilka.update(delta)
                 game_over = true
                 if winner ~= "draw" then
                     score[winner] = score[winner] + 1
+                    if winner == "O" then
+                        play_loss_sound()  -- Відтворення сумного звуку, якщо виграв "O"
+                    elseif winner == "X" then
+                        play_win_sound()  -- Відтворення радісного звуку, якщо виграв "X"
+                    end
                 end
             end
         end
@@ -279,6 +289,28 @@ end
 function draw_o(x, y, size)
     local color = CORAL -- Кораловий для нулика
     display.draw_circle(x, y, size, color)
+end
+
+-- Функція для відтворення сумного звуку програшу
+function play_loss_sound()
+    -- Мелодія "ту-ту-ду" (сумний звук програшу)
+    local melody = {
+        {220, 4},  -- Низький тон (220 Гц) на 1/4
+        {180, 4},  -- Ще нижчий тон (180 Гц) на 1/4
+        {150, 2},  -- Найнижчий тон (150 Гц) на 1/2
+    }
+    buzzer.play_melody(melody, 60)  -- Відтворюємо мелодію з темпом 60 ударів на хвилину
+end
+
+-- Функція для відтворення радісної мелодії виграшу
+function play_win_sound()
+    -- Мелодія "до-мі-соль" (радісний звук виграшу)
+    local melody = {
+        {523, 4},  -- Нота "до" (523 Гц) на 1/4
+        {659, 4},  -- Нота "мі" (659 Гц) на 1/4
+        {784, 2},  -- Нота "соль" (784 Гц) на 1/2
+    }
+    buzzer.play_melody(melody, 120)  -- Відтворюємо мелодію з темпом 120 ударів на хвилину
 end
 
 -- Функція малювання гри
